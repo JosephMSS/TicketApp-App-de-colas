@@ -12,7 +12,7 @@ export const Layout = () => {
   } = theme.useToken();
   return (
     <AntLayout style={{ height: "100vh" }}>
-      <Sider>
+      <Sider collapsedWidth='0' breakpoint="md">
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
