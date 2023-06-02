@@ -9,6 +9,7 @@ import {
 import { Layout } from "./components";
 import { Cola, CrearTicket, Escritorio, Ingresar } from "./pages";
 import { UIProvider } from "./context/UI.context";
+import { SocketProvider } from "./context";
 
 const App = () => {
   const router = createRoutesFromElements(
@@ -27,9 +28,11 @@ const App = () => {
   const routerProvider = createBrowserRouter(router);
   return (
     <>
-      <UIProvider>
-        <RouterProvider router={routerProvider} />
-      </UIProvider>
+      <SocketProvider>
+        <UIProvider>
+          <RouterProvider router={routerProvider} />
+        </UIProvider>
+      </SocketProvider>
     </>
   );
 };
