@@ -4,12 +4,17 @@ import { useHideMenu } from "../hooks/useHideMenu";
 import { useEffect, useState } from "react";
 import { UserStorage } from "../utils";
 import { useNavigate } from "react-router-dom";
+import { useSocketContext } from "../context";
+import { Ticket } from "../models";
 const { Title, Text } = Typography;
 export const Escritorio = () => {
   useHideMenu({ ocultar: false });
+  const { socket } = useSocketContext();
+
   const navigate = useNavigate();
 
   const [usuario, setUsuario] = useState(UserStorage.find());
+  const [ticket, setTicket] = useState(new Ticket());
 
   useEffect(() => {
     if (!usuario.agente && !usuario.escritorio) {
@@ -25,7 +30,14 @@ export const Escritorio = () => {
     setUsuario(UserStorage.find());
   };
   const handleNextTicket = () => {
-    console.log("Salir");
+    socket.emit("siguiente-ticket-trabajar", usuario, (ticket) => {
+    
+      const ticketAsignado = new Ticket(ticket);
+      console.log("🚀 ~ file: Escritorio.page.jsx:36 ~ socket.emit ~ ticket:", ticket)
+      console.log("🚀 ~ file: Escritorio.page.jsx:39 ~ socket.emit ~ ticketAsignado:", ticketAsignado)
+      setTicket(ticketAsignado);
+    });
+   
   };
   return (
     <>
@@ -43,14 +55,17 @@ export const Escritorio = () => {
         </Col>
       </Row>
       <Divider />
-      <Row>
-        <Col>
-          <Text>Esta atendiendo el ticket número: </Text>
-          <Text style={{ fontSize: 30 }} type="danger ">
-            {TICKET_NUMBER}
-          </Text>
-        </Col>
-      </Row>
+      {ticket.number && (
+        <Row>
+          <Col>
+            <Text>Esta atendiendo el ticket número: </Text>
+            <Text style={{ fontSize: 30 }} type="danger ">
+              {ticket.number}
+            </Text>
+          </Col>
+        </Row>
+      )}
+
       <Row>
         <Col offset={18} span={6} align="right">
           <Button onClick={handleNextTicket} shape="round" type="primary">

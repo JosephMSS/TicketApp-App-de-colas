@@ -18,9 +18,9 @@ class TicketList {
     this.pendientes.push(nuevoTicket);
     return nuevoTicket;
   }
-  asignarTicket() {
+  asignarTicket({ agente, escritorio }) {
     if (this.pendientes.length === 0) {
-      return null;
+      return { id: null, number: null, escritorio: null, agente: null };
     }
     const siguienteTicket = this.pendientes.shift();
 
@@ -28,6 +28,7 @@ class TicketList {
     siguienteTicket.escritorio = escritorio;
 
     this.asignados.unshift(siguienteTicket);
+    return siguienteTicket;
   }
 }
 module.exports = { TicketList };
