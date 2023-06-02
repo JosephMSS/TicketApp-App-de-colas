@@ -1,7 +1,9 @@
 import { Card, Col, Divider, List, Row, Tag, Typography } from "antd";
 import { data } from "../mock";
+import { useHideMenu } from "../hooks/useHideMenu";
 const { Title, Text } = Typography;
 export const Cola = () => {
+  useHideMenu({ ocultar: true });
   return (
     <>
       <Title level={1}>Atendiendo al cliente</Title>

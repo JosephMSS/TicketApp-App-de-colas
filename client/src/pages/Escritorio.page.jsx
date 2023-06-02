@@ -1,12 +1,28 @@
 import { CloseCircleOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Row, Typography } from "antd";
+import { useHideMenu } from "../hooks/useHideMenu";
+import { useEffect, useState } from "react";
+import { UserStorage } from "../utils";
+import { useNavigate } from "react-router-dom";
 const { Title, Text } = Typography;
 export const Escritorio = () => {
-  const USER_NAME = "Joseph";
-  const DESKTOP_NUMBER = 1;
+  useHideMenu({ ocultar: false });
+  const navigate = useNavigate();
+
+  const [usuario, setUsuario] = useState(UserStorage.find());
+
+  useEffect(() => {
+    if (!usuario.agente && !usuario.escritorio) {
+      navigate("/ingresar", { replace: true });
+    }
+  }, [usuario]);
+
+  const USER_NAME = usuario.agente;
+  const DESKTOP_NUMBER = usuario.escritorio;
   const TICKET_NUMBER = 2;
   const handleExit = () => {
-    console.log("Salir");
+    UserStorage.delete();
+    setUsuario(UserStorage.find());
   };
   const handleNextTicket = () => {
     console.log("Salir");

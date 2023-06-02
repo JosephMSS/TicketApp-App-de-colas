@@ -1,18 +1,20 @@
 import {
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Layout as AntLayout, Menu, theme } from "antd";
 import { Link, Outlet } from "react-router-dom";
+import { useUIContext } from "../context/UI.context";
 const { Sider, Content } = AntLayout;
 export const Layout = () => {
+  const { ocultarMenu } = useUIContext();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <AntLayout style={{ height: "100" }}>
-      <Sider collapsedWidth='0' breakpoint="md">
+    <AntLayout style={{ height: "100vh" }}>
+      <Sider collapsedWidth="0" breakpoint="md" hidden={ocultarMenu}>
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"

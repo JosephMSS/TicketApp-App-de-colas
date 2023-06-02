@@ -2,15 +2,27 @@ import { SaveOutlined } from "@ant-design/icons";
 import { Button, Divider, Form, Input, InputNumber, Typography } from "antd";
 const { Title, Text } = Typography;
 import { useNavigate } from "react-router-dom";
+import { useHideMenu } from "../hooks/useHideMenu";
+import { UserStorage } from "../utils";
+import { useEffect, useState } from "react";
 export const Ingresar = () => {
+  useHideMenu({ ocultar: false });
   const navigate = useNavigate();
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const [usuario] = useState(UserStorage.find());
+  const onFinish = ({ escritorio, agente }) => {
+    UserStorage.create({ escritorio, agente });
+
     navigate("/escritorio");
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  useEffect(() => {
+    if (usuario.agente && usuario.escritorio) {
+      navigate("/escritorio");
+    }
+  }, []);
+
   return (
     <>
       <Title>Ingresar</Title>

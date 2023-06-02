@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { Layout } from "./components";
 import { Cola, CrearTicket, Escritorio, Ingresar } from "./pages";
+import { UIProvider } from "./context/UI.context";
 
 const App = () => {
   const router = createRoutesFromElements(
@@ -24,6 +25,12 @@ const App = () => {
     </Route>
   );
   const routerProvider = createBrowserRouter(router);
-  return <RouterProvider router={routerProvider} />;
+  return (
+    <>
+      <UIProvider>
+        <RouterProvider router={routerProvider} />
+      </UIProvider>
+    </>
+  );
 };
 export default App;

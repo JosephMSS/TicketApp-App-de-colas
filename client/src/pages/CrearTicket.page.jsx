@@ -1,7 +1,10 @@
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Typography } from "antd";
+import { useHideMenu } from "../hooks/useHideMenu";
 const { Text, Title } = Typography;
 export const CrearTicket = () => {
+  useHideMenu({ ocultar: true });
+
   const NEW_TICKET_NUMBER = 2;
   const handleCreateNewTicket = () => {
     console.log("handleCreateNewTicket");
