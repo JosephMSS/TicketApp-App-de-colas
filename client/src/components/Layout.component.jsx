@@ -11,7 +11,7 @@ export const Layout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <AntLayout style={{ height: "100vh" }}>
+    <AntLayout style={{ height: "100" }}>
       <Sider collapsedWidth='0' breakpoint="md">
         <div className="demo-logo-vertical" />
         <Menu
