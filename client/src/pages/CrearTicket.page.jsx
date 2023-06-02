@@ -1,13 +1,28 @@
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Typography } from "antd";
 import { useHideMenu } from "../hooks/useHideMenu";
+import { useSocketContext } from "../context";
+import { useState } from "react";
 const { Text, Title } = Typography;
 export const CrearTicket = () => {
   useHideMenu({ ocultar: true });
-
-  const NEW_TICKET_NUMBER = 2;
+  const { socket } = useSocketContext();
+  const emptyTicket = {
+    id: undefined,
+    number: undefined,
+    escritorio: undefined,
+    agente: undefined,
+  };
+  const [ticket, setTicket] = useState(emptyTicket);
   const handleCreateNewTicket = () => {
     console.log("handleCreateNewTicket");
+    socket.emit("solicitar-ticket", null, (ticket) => {
+      console.log(
+        "🚀 ~ file: CrearTicket.page.jsx:15 ~ socket.emit ~ ticket:",
+        ticket
+      );
+      setTicket(ticket);
+    });
   };
   return (
     <>
@@ -28,7 +43,7 @@ export const CrearTicket = () => {
           <Text level={2}>Su número:</Text>
           <br />
           <Text type="success" style={{ fontSize: 55 }}>
-            {NEW_TICKET_NUMBER}
+            {ticket.number}
           </Text>
         </Col>
       </Row>
